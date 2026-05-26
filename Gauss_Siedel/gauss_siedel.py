@@ -39,7 +39,7 @@ def permutacao(m: list[list[float]]) -> list[list[float]]:
     return m
 
 
-def equacao_interativa(m: list[list[float]], k: int = 0,
+def equacao_interativa(m: list[list[float]], k: int = 0, kmax: int = 10,
                        aproximacao_interacao: list[float] | None = None, condicao_parada: float = 0.01) -> float:
     if not aproximacao_interacao:
         return 0.0
@@ -55,7 +55,7 @@ def equacao_interativa(m: list[list[float]], k: int = 0,
             sun_line += (jv * aproximacao_interacao[jk]) * -1
 
         sun_line += iv[-1]
-        aproximacao_interacao[ik] = sun_line / iv[ik]
+        aproximacao_interacao[ik] = round(sun_line / iv[ik], 4)
         sun_line = 0
 
     print(f"K {k}\n")
@@ -75,13 +75,13 @@ def equacao_interativa(m: list[list[float]], k: int = 0,
         return error_max
 
     print('=' * 24)
-    return equacao_interativa(m, k, aproximacao_interacao, condicao_parada)
+    return equacao_interativa(m, k, kmax, aproximacao_interacao, condicao_parada)
 
 
 matriz: list[list[float]] = [
-    [1.0, -15.0, 1.0, -4.0],
-    [1.0, 2.0, 25.0, 14.0],
-    [15.0, -2.0, 1.0, 6.0]
+    [10.0,  2.0,    1.0,    7.0],
+    [1.0,   5.0,    1.0,    -8.0],
+    [2.0,   3.0,    10.0,   6.0]
 ]
 
 print('=' * 24)
@@ -98,4 +98,4 @@ if not criterion_linha(matriz):
     print(df.to_string(index=False, justify='left'))
     print('=' * 24)
 
-equacao_interativa(matriz, k=0, aproximacao_interacao=[0 for n in range(len(matriz))], condicao_parada=0.01)
+equacao_interativa(matriz, k=0, kmax=10, aproximacao_interacao=[0 for n in range(len(matriz))], condicao_parada=0.01)
